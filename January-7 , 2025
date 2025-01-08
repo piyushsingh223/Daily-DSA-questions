@@ -36,3 +36,54 @@ int countTriangles(vector<int>& arr) {
         return ans;
  }
 
+
+Leetcode 1138. Alphabet Board Path
+
+ string alphabetBoardPath(string target) {
+        unordered_map<char,pair<int,int>> m;
+        int n=target.size();
+        int startrow=0;
+        int startcol=0;
+        string ans="";
+        for(int i=0;i<n;i++){
+            int targetrow=(target[i]-'a')/5;     //most important part of question which is to find the row number and column number .
+            int targetcol=(target[i]-'a')%5;
+            if(target[i]=='z'){                 //we handle separate case for z as in this case we go columnwise first and then rowwise.
+                while(startcol>targetcol){
+                    startcol--;
+                    ans+='L';
+                }
+                while(targetrow>startrow){
+                    startrow++;
+                    ans+='D';
+                }
+                ans+='!';
+            } else{                        //apart from z , we go rowwise first and them columnwise.
+                if(targetrow>startrow){
+                    while(targetrow>startrow){
+                        startrow++;
+                        ans+='D';
+                    }
+                } else if(startrow>targetrow){
+                    while(startrow>targetrow){
+                        startrow--;
+                        ans+='U';
+                    }
+                }
+
+                if(targetcol>startcol){
+                    while(targetcol>startcol){
+                        startcol++;
+                        ans+='R';
+                    }
+                } else if(startcol>targetcol){
+                    while(startcol>targetcol){
+                        startcol--;
+                        ans+='L';
+                    }
+                }
+                ans+='!';
+            }
+        }
+        return ans;
+}
