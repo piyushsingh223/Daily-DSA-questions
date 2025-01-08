@@ -1,0 +1,38 @@
+Leetcode 3042. Count Prefix and Suffix Pairs I 
+
+int countPrefixSuffixPairs(vector<string>& words) {
+        int n=words.size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                string a=words[i];
+                string temp=words[j];
+                int ind1=temp.find(a);
+                reverse(a.begin(),a.end());
+                reverse(temp.begin(),temp.end());
+                int ind2=temp.find(a);
+                if(ind1==0 && ind2==0) ans++;
+            }
+        }
+        return ans;
+ }
+
+
+GFG - Count the number of possible triangles
+
+int countTriangles(vector<int>& arr) {
+        // code here
+        int n=arr.size(),ans=0;;
+        sort(arr.begin(),arr.end());
+        for(int i=n-1;i>=2;i--){
+            int j=0,k=i-1;
+            while(j<k){
+                if(arr[j]+arr[k]>arr[i]){
+                    ans+=(k-j);              // if arr[j]+arr[k]>arr[i] , this means that all the elements between j and k staisfy the condition because the array is sorted.
+                    k--;
+                } else j++;
+            }
+        }
+        return ans;
+ }
+
