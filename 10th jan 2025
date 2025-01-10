@@ -1,1 +1,41 @@
+Leetcode -> 916. Word Subsets
 
+
+//the crux of this problem is that since the string satisfying the condition in words1 should have all the strings as a subset of that string , so we can consider all the strings as 
+a single string. To ensure that any word from words1 is universal, we first need to compute the maximum frequency of each character that must be present across all words in words2.
+For example, if one word in words2 requires 2 occurrences of 'a', and another requires 1 occurrence of 'a', we set the required frequency of 'a' to 2.Because then all smaller 'a' 
+requirment will be completed.
+
+
+vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        int n=words1.size();
+        int m=words2.size();
+        vector<int> charfreq(26,0);
+        vector<int> maxfreq(26,0);
+        vector<int> mainfreq(26,0);
+        for(int i=0;i<m;i++){
+            charfreq.assign(26,0);
+            for(auto x:words2[i]){
+                charfreq[x-'a']++;
+            }
+            for(int i=0;i<26;i++){
+                maxfreq[i]=max(maxfreq[i],charfreq[i]);
+            }
+        }
+        vector<string> ans;
+        for(int i=0;i<n;i++){
+            mainfreq.assign(26,0);
+            bool val=true;
+            for(auto x:words1[i]){
+                mainfreq[x-'a']++;
+            }
+            for(int i=0;i<26;i++){
+                if(mainfreq[i]<maxfreq[i]){
+                    val=false;
+                    break;
+                }
+            }
+            if(val) ans.push_back(words1[i]);
+        }
+        return ans;
+    }
