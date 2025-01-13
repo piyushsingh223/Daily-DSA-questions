@@ -54,5 +54,18 @@ int largestRectangleArea(vector<int>& heights) {
  }
 
 
+GFG - Container With Most Water :- 
 
+int maxWater(vector<int> &heights) {
+        // code here
+        int n=heights.size();
+        int left=0,right=n-1;
+        int ans=0;
+        while(left<right){
+            ans=max(ans,min(heights[left],heights[right])*(right-left));
+            if(heights[left]<=heights[right]) left++;
+            else right--;
+        }
+        return ans;
+}
 
