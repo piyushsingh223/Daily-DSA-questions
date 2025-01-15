@@ -1,0 +1,22 @@
+GFG :- Longest Subarray with Sum K
+
+
+int longestSubarray(vector<int>& arr, int k) {
+        // code here
+        int n=arr.size();
+        unordered_map<int,int> m;
+        int presum=0,ans=0;
+        for(int i=0;i<n;i++){
+            presum+=arr[i];
+            if(presum==k) ans=max(ans,i+1);
+            
+            if(m.find(presum-k)!=m.end()){
+                ans=max(ans,i-m[presum-k]);
+            }
+            
+            if(m.find(presum)==m.end()){
+                m[presum]=i;
+            }
+        }
+        return ans;
+  }
