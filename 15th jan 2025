@@ -20,3 +20,51 @@ int longestSubarray(vector<int>& arr, int k) {
         }
         return ans;
   }
+
+
+
+Leetcode : 2429. Minimize XOR
+
+
+bool isSetbit(int x,int bit){
+    return x&(1<<bit);
+}
+
+void setBit(int &x,int bit){
+    x|=(1<<bit);
+}
+
+void unsetBit(int &x,int bit){
+    x&=~(1<<bit);
+}
+    int minimizeXor(int num1, int num2) {
+        int cnt1=0;
+        int tempnum2=num2;
+        while(tempnum2){
+            if(tempnum2&1) cnt1++;
+            tempnum2 = (tempnum2>>1);
+        }
+        int res=num1;
+        int cnt2=0;
+        while(res){
+            if(res&1) cnt2++;
+            res = (res>>1);
+        }
+        res=num1;
+        int currbit=0;
+        while(cnt2<cnt1){
+            if(!isSetbit(res,currbit)){
+                setBit(res,currbit);
+                cnt2++;
+            }
+            currbit++;
+        }
+        while(cnt2>cnt1){
+            if(isSetbit(res,currbit)){
+                unsetBit(res,currbit);
+                cnt2--;
+            }
+            currbit++;
+        }
+        return res;
+    }
