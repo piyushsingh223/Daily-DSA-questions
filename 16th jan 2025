@@ -1,0 +1,29 @@
+2425. Bitwise XOR of All Pairings :- 
+
+
+int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
+        int n=nums1.size(),m=nums2.size();                 //the crux of the problem is to check for even and odd cases of the size of the arrays .
+        if(n%2==0 && m%2==0) return 0;
+        else if(n%2==0 && m%2!=0){
+            int ans=0;
+            for(int i=0;i<n;i++){
+                ans=(ans^nums1[i]);
+            }
+            return ans;
+        } else if(n%2!=0 && m%2==0){
+            int ans=0;
+            for(int i=0;i<m;i++){
+                ans=(ans^nums2[i]);
+            }
+            return ans;
+        } else{
+            int ans=0;
+            for(int i=0;i<m;i++){
+                ans=(ans^nums2[i]);
+            }
+            for(int i=0;i<n;i++){
+                ans=(ans^nums1[i]);
+            }
+            return ans;
+        }
+ }
