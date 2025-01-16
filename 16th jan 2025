@@ -27,3 +27,29 @@ int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
             return ans;
         }
  }
+
+
+
+GFG : Largest subarray of 0's and 1's
+
+int maxLen(vector<int> &arr) {
+        // Your code here
+        int n=arr.size();
+        unordered_map<int,int> m;
+        int presum=0,ans=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]==0) presum+=-1;
+            else presum+=1;
+            
+            if(presum==0) ans=max(ans,i+1);
+            
+            if(m.find(presum)!=m.end()){
+                ans=max(ans,i-m[presum]);
+            }
+            
+            if(m.find(presum)==m.end()){
+                m[presum]=i;
+            }
+        }
+        return ans;
+}
