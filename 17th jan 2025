@@ -76,3 +76,28 @@ vector<int> productExceptSelf(vector<int>& arr) {
         }
         return ans;
 }
+
+
+3133. Minimum Array End :-
+
+
+//The first thing that comes to mind is that, for the AND of all numbers to remain x, every number in 
+the array needs to include at least the same bits as x. This means that the numbers in the array must 
+retain the bitwise characteristics of x as we move from one element to the next.
+Now, the smallest valid number we can start with is x itself, since including anything smaller would 
+lose the bit pattern that defines x. From there, we need to build up the next elements while keeping 
+the numbers strictly increasing. The key idea is that as long as the new number has the same relevant 
+bits as x, the AND result will remain unchanged.To achieve this, we take the current number and increment it.
+But after incrementing, we force the new number to keep the bit pattern of x by applying a bitwise OR with x. 
+This ensures that no bits from x are lost in the process, and we continue this until the last element is constructed.
+
+
+
+long long minEnd(int n, int x) {
+        long long start=x;
+        n--;
+        while(n--){
+            start=((start+1)|x);
+        }
+        return start;
+ }
