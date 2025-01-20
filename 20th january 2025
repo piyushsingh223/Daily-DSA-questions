@@ -20,3 +20,39 @@ int firstCompleteIndex(vector<int>& arr, vector<vector<int>>& mat) {
         }
         return 0;
 }
+
+
+
+GFG - Merge Sorted Linked List :- 
+
+Node* sortedMerge(Node* head1, Node* head2) {
+        // code here
+        Node* newNode = new Node(0);
+        Node* temp = newNode;
+
+        while (head1 != nullptr && head2 != nullptr) {
+            if (head1->data < head2->data) {
+                temp->next = new Node(head1->data);
+                temp = temp->next;
+                head1 = head1->next;
+            } else {
+                temp->next = new Node(head2->data);
+                temp = temp->next;
+                head2 = head2->next;
+            }
+        }
+
+        while (head1 != nullptr) {
+            temp->next = new Node(head1->data);
+            temp = temp->next;
+            head1 = head1->next;
+        }
+
+        while (head2 != nullptr) {
+            temp->next = new Node(head2->data);
+            temp = temp->next;
+            head2 = head2->next;
+        }
+
+        return newNode->next;
+ }
