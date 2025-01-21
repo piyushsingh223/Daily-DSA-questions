@@ -1,0 +1,29 @@
+2381. Shifting Letters II :- 
+
+string shiftingLetters(string s, vector<vector<int>>& shifts) {
+        int n=s.size();
+        vector<int> presum(n+1,0);
+        for(auto x:shifts){
+            int low=x[0],high=x[1],parity=x[2];
+            if(parity==1){
+                presum[low]+=1;
+                presum[high+1]-=1;
+            } else{
+                presum[low]-=1;
+                presum[high+1]+=1;
+            }
+        }
+        for(int i=1;i<n+1;i++){
+            presum[i]+=presum[i-1];
+        }
+        for(int i=0;i<n;i++){
+            int op=0;
+            op=(op+presum[i])%26;
+
+            if(op<0) op+=26;
+
+            char ch='a'+(s[i]-'a'+op)%26;
+            s[i]=ch;
+        }
+        return s;
+}
