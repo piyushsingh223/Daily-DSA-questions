@@ -50,3 +50,19 @@ string shiftingLetters(string s, vector<int>& shifts) {
         }
         return s;
 }
+
+
+2017. Grid Game :- 
+
+long long gridGame(vector<vector<int>>& grid) {
+        int n=grid.size(),m=grid[0].size();
+        long long firstrowsum=0,secondrowsum=0;
+        for(int j=0;j<m;j++) firstrowsum+=grid[0][j];
+        long long ans=LONG_LONG_MAX;
+        for(int i=0;i<m;i++){
+            firstrowsum-=grid[0][i];
+            ans=min(ans,max(firstrowsum,secondrowsum));
+            secondrowsum+=grid[1][i];
+        }
+        return ans;
+}
