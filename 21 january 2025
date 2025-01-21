@@ -27,3 +27,26 @@ string shiftingLetters(string s, vector<vector<int>>& shifts) {
         }
         return s;
 }
+
+
+
+848. Shifting Letters :- 
+
+
+string shiftingLetters(string s, vector<int>& shifts) {
+        int n=s.size();
+        vector<long long> presum(n+1,0);
+        for(int i=0;i<n;i++){
+            presum[0]+=shifts[i];
+            presum[i+1]-=shifts[i];
+        }
+        for(int i=1;i<n+1;i++){
+            presum[i]+=presum[i-1];
+        }
+        for(int i=0;i<n;i++){
+            int op=(presum[i]+26)%26;
+            char ch='a'+(s[i]-'a'+op)%26;
+            s[i]=ch;
+        }
+        return s;
+}
