@@ -1,0 +1,44 @@
+1765. Map of Highest Peak :- 
+
+bool isvalid(int row,int col,int n,int m){
+    if(row>=0 && row<n && col>=0 && col<m) return true;
+    else return false;
+}
+vector<vector<int>> highestPeak(vector<vector<int>>& isWater) {
+      int n=isWater.size();
+      int m=isWater[0].size();
+      queue<pair<int,int>> q;
+      for(int i=0;i<n;i++){
+          for(int j=0;j<m;j++){
+              if(isWater[i][j]==1){
+                  q.push({i,j});
+                  isWater[i][j]=0;
+               } else {
+                    isWater[i][j]=-1;
+                }
+            }
+        }
+
+        vector<vector<bool>> visited(n,vector<bool>(m,false));
+
+        vector<int> drow={-1,0,1,0};
+        vector<int> dcol={0,1,0,-1};
+
+        while(!q.empty()){
+            pair<int,int> temp=q.front();
+            q.pop();
+            int row=temp.first;
+            int col=temp.second;
+            visited[row][col]=true;
+            for(int i=0;i<4;i++){
+                int newrow=row+drow[i];
+                int newcol=col+dcol[i];
+                if(isvalid(newrow,newcol,n,m) && !visited[newrow][newcol] && isWater[newrow][newcol]!=0){
+                    isWater[newrow][newcol]=isWater[row][col]+1;
+                    q.push({newrow,newcol});
+                    visited[newrow][newcol]=true;
+                }
+            }
+        }
+        return isWater;
+  }
