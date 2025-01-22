@@ -42,3 +42,65 @@ vector<vector<int>> highestPeak(vector<vector<int>>& isWater) {
         }
         return isWater;
   }
+
+
+
+GFG :- Add Number Linked Lists :- 
+
+Node* reverse(Node* head){
+      if(head==NULL || head->next==NULL) return head;
+      Node* t1=head;
+      Node* t2=head->next;
+      t1->next=NULL;
+      while(t2!=NULL){
+        Node* t3=t2->next;
+        t2->next=t1;
+        t1=t2;
+        t2=t3;
+       }
+       return t1;
+  }
+    Node* addTwoLists(Node* num1, Node* num2) {
+        // code here
+        Node* head1=reverse(num1);
+        Node* head2=reverse(num2);
+        
+        int carry=0;
+        
+        Node* newhead=new Node(-1);
+        Node* res=newhead;
+        
+        while(head1 && head2){
+            int sum=head1->data+head2->data+carry;
+            carry=sum/10;
+            sum=sum%10;
+            newhead->next=new Node(sum);
+            newhead=newhead->next;
+            head1=head1->next;
+            head2=head2->next;
+        }
+        while(head1){
+            int sum=head1->data+carry;
+            carry=sum/10;
+            sum=sum%10;
+            newhead->next=new Node(sum);
+            newhead=newhead->next;
+            head1=head1->next;
+        }
+        while(head2){
+            int sum=head2->data+carry;
+            carry=sum/10;
+            sum=sum%10;
+            newhead->next=new Node(sum);
+            newhead=newhead->next;
+            head2=head2->next;
+        }
+        if(carry>0){
+            newhead->next=new Node(carry);
+        }
+        Node* ans=reverse(res->next);
+        while(ans && ans->data==0){
+            ans=ans->next;
+        }
+        return ans;
+    }
