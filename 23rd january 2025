@@ -25,4 +25,25 @@ int countServers(vector<vector<int>>& grid) {
         return ans;
     }
 
+
+GFG :- Clone List with Next and Random :- 
+
+Node *cloneLinkedList(Node *head) {
+        //Write your code here
+        unordered_map<Node*,Node*> m;
+        Node* temp=head;
+        while(temp){
+            Node* temp2=new Node(temp->data);
+            m[temp]=temp2;
+            temp=temp->next;
+        }
+        for(auto x:m){
+            if(x.first->next!=NULL) x.second->next=m[x.first->next];
+            else x.second->next=NULL;
+            if(x.first->random!=NULL) x.second->random=m[x.first->random];
+            else x.second->random=NULL;
+        }
+        return m[head];
+}
+
     
