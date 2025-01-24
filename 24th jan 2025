@@ -31,3 +31,23 @@ vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         }
         return ans;
 }
+
+
+
+GFG :- Detect Loop in linked list :- 
+
+
+bool detectLoop(Node* head) {
+        // your code here
+        if(head->next==NULL) return false;
+        Node* slow=head;
+        Node* fast=head;
+        slow=slow->next;
+        fast=fast->next->next;
+        while(slow->next && fast->next && fast->next->next){
+            if(slow==fast) return true;
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        return false;
+}
