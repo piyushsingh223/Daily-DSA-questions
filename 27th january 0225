@@ -1,0 +1,37 @@
+1462. Course Schedule IV :- 
+
+vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
+        vector<int> indegree(n,0);
+        vector<vector<int>> graph(n,vector<int>());
+        if(prerequisites.size()==0){
+            vector<bool> res(n,false);
+            return res;
+        }
+        for(auto x:prerequisites){
+            graph[x[0]].push_back(x[1]);
+            indegree[x[1]]++;
+        }
+        queue<int> q;
+        for(int i=0;i<indegree.size();i++){
+            if(indegree[i]==0) q.push(i);
+        }
+        unordered_map<int,unordered_set<int>> m;
+        while(!q.empty()){
+            int temp=q.front();
+            q.pop();
+            for(auto x:graph[temp]){
+                m[x].insert(temp);
+                for(auto y:m[temp]){
+                    m[x].insert(y);
+                }
+                indegree[x]--;
+                if(indegree[x]==0) q.push(x);
+            }
+        }
+        vector<bool> ans;
+        for(auto x:queries){
+            if(m[x[1]].find(x[0])==m[x[1]].end()) ans.push_back(false);
+            else ans.push_back(true);
+        }
+        return ans;
+}
