@@ -1,0 +1,46 @@
+2658. Maximum Number of Fish in a Grid :- 
+
+bool isvalid(int row,int col,int n,int m){
+    if(row>=0 && row<n && col>=0 && col<m) return true;
+    else return false;
+}
+
+int bfs(int i,int j,int n,int m,vector<vector<int>> &grid,vector<vector<bool>> &visited){
+    visited[i][j]=true;
+    vector<int> drow={-1,0,1,0};
+        vector<int> dcol={0,1,0,-1};
+        int res=0;
+        queue<pair<int,int>> q;
+        q.push({i,j});
+        while(!q.empty()){
+            pair<int,int> temp=q.front();
+            int row=temp.first,col=temp.second;
+            q.pop();
+                res+=grid[row][col];
+                for(int i=0;i<4;i++){
+                    int newrow=row+drow[i];
+                    int newcol=col+dcol[i];
+                    if(isvalid(newrow,newcol,n,m) && !visited[newrow][newcol] && grid[newrow][newcol]>0){
+                        q.push({newrow,newcol});
+                        visited[newrow][newcol]=true;
+                    }
+                }
+        }
+        return res;
+}
+
+int findMaxFish(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        queue<pair<int,int>> q;
+        int ans=0;
+        vector<vector<bool>> visited(n,vector<bool>(m,false));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visited[i][j] && grid[i][j]>0){
+                    ans=max(ans,bfs(i,j,n,m,grid,visited));
+                }
+            }
+        }
+        return ans;
+}
